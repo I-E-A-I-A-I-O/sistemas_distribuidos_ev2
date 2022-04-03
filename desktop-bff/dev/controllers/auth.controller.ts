@@ -1,5 +1,5 @@
 import { Request, Response } from 'express'
-import { Credentials } from '../helpers/credentials-schema'
+import { Credentials } from '../helpers/types/credentials-schema'
 
 export const register = async (request: Request, reply: Response) => {
     try {
