@@ -3,4 +3,4 @@ import { register } from '../controllers/auth.controller'
 
 export const authRouter = Express.Router()
 
-authRouter.post('/register', register)
+authRouter.post('/auth/users', register)

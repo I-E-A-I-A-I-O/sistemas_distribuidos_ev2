@@ -5,7 +5,6 @@ import cors from 'cors'
 import helmet from 'helmet'
 import { authRouter } from './routers/auth.router'
 import { log } from './helpers/logstash'
-import fetch from 'node-fetch'
 
 const PORT = process.env.MOBILE_BFF_PORT || 3000
 const server = Express()
