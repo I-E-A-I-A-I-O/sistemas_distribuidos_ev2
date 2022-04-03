@@ -9,9 +9,9 @@ CREATE SCHEMA users;
 CREATE SCHEMA dogs;
 CREATE TABLE users.users (
     user_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,
-    user_name VARCHAR[75] NOT NULL,
     user_email VARCHAR[75] UNIQUE,
-    user_password VARCHAR[256] NOT NULL
+    user_password VARCHAR[256] NOT NULL,
+    user_role VARCHAR[50] NOT NULL
 );
 CREATE TABLE dogs.dogs (
     dog_id UUID DEFAULT uuid_generate_v4() PRIMARY KEY,

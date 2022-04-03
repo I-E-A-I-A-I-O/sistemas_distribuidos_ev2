@@ -27,7 +27,7 @@ server.get('/health', async (request, reply) => {
     reply.sendStatus(200)
 })
 
-server.use('/', authRouter)
+server.use('/auth', authRouter)
 
 server.listen(PORT, () => {
     log('info', 'server-started', { port: PORT, name: 'auth-server' })
