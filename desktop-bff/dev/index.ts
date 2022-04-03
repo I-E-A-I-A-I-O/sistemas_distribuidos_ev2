@@ -7,7 +7,7 @@ import { authRouter } from './routers/auth.router'
 import { log } from './helpers/logstash'
 import fetch from 'node-fetch'
 
-const PORT = process.env.PORT || 3000
+const PORT = process.env.DESKTOP_BFF_PORT || 3001
 const server = Express()
 
 server.use(helmet())

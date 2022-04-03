@@ -2,3 +2,5 @@
 node_modules
 package-lock.json
 prod/
+.vscode/
+psql-docker.session.sql

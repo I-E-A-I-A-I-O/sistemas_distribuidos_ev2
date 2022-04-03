@@ -5,9 +5,8 @@ import cors from 'cors'
 import helmet from 'helmet'
 import { authRouter } from './routers/auth.router'
 import { log } from './helpers/logstash'
-import fetch from 'node-fetch'
 
-const PORT = process.env.MOBILE_BFF_PORT || 3000
+const PORT = process.env.AUTH_SERVER_PORT || 3002
 const server = Express()
 
 server.use(helmet())
@@ -28,8 +27,8 @@ server.get('/health', async (request, reply) => {
     reply.sendStatus(200)
 })
 
-server.use('/mobile', authRouter)
+server.use('/', authRouter)
 
 server.listen(PORT, () => {
-    log('info', 'server-started', { port: PORT, name: 'mobile-bff' })
+    log('info', 'server-started', { port: PORT, name: 'auth-server' })
 })
