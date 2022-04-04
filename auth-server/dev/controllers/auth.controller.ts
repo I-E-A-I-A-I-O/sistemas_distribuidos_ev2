@@ -5,6 +5,7 @@ import { pool } from '../helpers/database'
 import { sql } from 'slonik'
 import bcrypt from 'bcrypt'
 import { log } from '../helpers/logstash'
+import jwt from 'jsonwebtoken'
 
 export const register = async (request: Request, reply: Response) => {
     try {
@@ -52,5 +53,73 @@ export const register = async (request: Request, reply: Response) => {
             ua: request.headers['user-agent'] || null
         })
         reply.status(500).json({ message: 'Error completing registration' })
+    }
+}
+
+export const login = async (request: Request, reply: Response) => {
+    try {
+        const cr = await Credentials.parseAsync(request.body)
+        const qr = await pool.connect(async (conn) => {
+            const result = await conn.query<User>(sql`
+            SELECT * 
+            FROM users.users
+            WHERE user_email = ${cr.email}`)
+            return result
+        })
+
+        if (qr.rowCount < 1) {
+            log('warn', 'invalid-credentials', {
+                reason: 'Login failed. Email is not registered',
+                path: request.url,
+                method: request.method,
+                ip: request.ip,
+                ua: request.headers['user-agent'] || null
+            })
+            return reply.status(404).json({ message: 'Email not registered.' })
+        }
+
+        const user = qr.rows[0]
+        const same = await bcrypt.compare(cr.password, user.user_password)
+
+        if (!same) {
+            log('warn', 'invalid-credentials', {
+                reason: 'Login failed. Incorrect password',
+                path: request.url,
+                method: request.method,
+                ip: request.ip,
+                ua: request.headers['user-agent'] || null
+            })
+            return reply.status(404).json({ message: 'Incorrect password.' })
+        }
+
+        if (!process.env.JWT_SECRET) {
+            log('error', 'EV-not-set', {
+                reason: 'JWT_SECRET not set',
+                path: request.url,
+                method: request.method,
+                ip: request.ip,
+                ua: request.headers['user-agent'] || null
+            })
+            return reply.status(500).json({ message: 'Login service not available.' })
+        }
+
+        const token = jwt.sign({ id: user.user_id, role: user.user_role }, process.env.JWT_SECRET, { expiresIn: '1h' })
+        log('info', 'login-success', {
+            reason: 'New token created.',
+            path: request.url,
+            method: request.method,
+            ip: request.ip,
+            ua: request.headers['user-agent'] || null
+        })
+        return reply.status(500).json({ token })
+    } catch(err) {
+        log('error', 'exception-caught', {
+            stack: err,
+            path: request.url,
+            method: request.method,
+            ip: request.ip,
+            ua: request.headers['user-agent'] || null
+        })
+        reply.status(500).json({ message: 'Error completing login' })
     }
 }

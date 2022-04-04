@@ -5,3 +5,10 @@ curl -X POST -H 'Content-Type: application/json' -d '{"email": "asd69@xd.yes", "
 ```
 
 Donde `{bff}` = desktop || mobile
+
+- LOGIN
+``` bash
+curl -X POST -H 'Content-Type: application/json' -d '{"email": "asd69@xd.yes", "password": "123"}' http://localhost:8000/{bff}/auth/users/session
+```
+
+Donde `{bff}` = desktop || mobile
