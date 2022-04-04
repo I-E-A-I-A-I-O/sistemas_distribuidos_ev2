@@ -6,7 +6,7 @@ const host = hostname()
 const [LS_HOST, LS_PORT] = process.env.LOGSTASH!.split(':')
 const NODE_ENV = process.env.NODE_ENV
 
-export const log = (severity: 'error' | 'warn' | 'info' | 'debug', type: string, fields: any) => {
+export const log = async (severity: 'error' | 'warn' | 'info' | 'debug', type: string, fields: any) => {
     const payload = JSON.stringify({
         '@timestamp': (new Date()).toISOString(),
         '@version': 1,

@@ -4,6 +4,7 @@ import { User } from '../helpers/types/auth-db-types'
 import { pool } from '../helpers/database'
 import { sql } from 'slonik'
 import bcrypt from 'bcrypt'
+import { log } from '../helpers/logstash'
 
 export const register = async (request: Request, reply: Response) => {
     try {
@@ -16,7 +17,16 @@ export const register = async (request: Request, reply: Response) => {
             return result.rowCount > 0
         })
 
-        if (registered) return reply.status(400).json({ message: 'email already registered.' })
+        if (registered) {
+            log('info', 'invalid-credentials', {
+                reason: 'Registration failed. Email already in registered',
+                path: request.url,
+                method: request.method,
+                ip: request.ip,
+                ua: request.headers['user-agent'] || null
+            })
+            return reply.status(400).json({ message: 'email already registered.' })
+        }
 
         const pass = await bcrypt.hash(cr.password, 10)
 
@@ -24,10 +34,23 @@ export const register = async (request: Request, reply: Response) => {
             await conn.query(sql`
             INSERT INTO users.users(user_email, user_role, user_password)
             VALUES(${cr.email}, 'regular', ${pass})`)
+            log('info', 'register-completed', {
+                reason: 'New user registered successfuly',
+                path: request.url,
+                method: request.method,
+                ip: request.ip,
+                ua: request.headers['user-agent'] || null
+            })
             return reply.status(201).json({ message: 'Account created' })
         })
     } catch(err) {
-        console.log(err)
+        log('error', 'exception-caught', {
+            stack: err,
+            path: request.url,
+            method: request.method,
+            ip: request.ip,
+            ua: request.headers['user-agent'] || null
+        })
         reply.status(500).json({ message: 'Error completing registration' })
     }
 }

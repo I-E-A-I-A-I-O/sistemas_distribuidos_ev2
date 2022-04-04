@@ -1,4 +1,12 @@
 services:
+  log:
+    container_name: elk
+    build: ./ELK-log/
+    ports:
+      - "5601:5601"
+      - "9200:9200"
+      - "5044:5044"
+      - "7777:7777/udp"
   db:
     container_name: database
     image: postgres
