@@ -3,10 +3,10 @@ services:
     container_name: database
     image: postgres
     ports:
-      - '5555:${DB_PORT}'
+      - '${DB_PORT_HOST}:${DB_PORT}'
     volumes:
       - data:/data/db
-      - ./databases/initialization.sh:/docker-entrypoint-initdb.d/initialization.sh
+      - ./database/initialization.sh:/docker-entrypoint-initdb.d/initialization.sh
     environment:
       - POSTGRES_PASSWORD=${DB_PASSWORD}
       - POSTGRES_USER=${DB_USERNAME}

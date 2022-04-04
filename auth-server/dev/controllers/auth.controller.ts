@@ -23,10 +23,11 @@ export const register = async (request: Request, reply: Response) => {
         await pool.connect(async (conn) => {
             await conn.query(sql`
             INSERT INTO users.users(user_email, user_role, user_password)
-            VALUES(${cr.email}, "regular", ${pass})`)
+            VALUES(${cr.email}, 'regular', ${pass})`)
             return reply.status(201).json({ message: 'Account created' })
         })
     } catch(err) {
+        console.log(err)
         reply.status(500).json({ message: 'Error completing registration' })
     }
 }

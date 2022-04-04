@@ -1,5 +1,6 @@
 import dotenv from 'dotenv'
-dotenv.config()
+import path from 'path'
+dotenv.config({ path: path.join(__dirname, '..', '..', '.env') })
 import Express from 'express'
 import cors from 'cors'
 import helmet from 'helmet'
