@@ -12,3 +12,10 @@ curl -X POST -H 'Content-Type: application/json' -d '{"email": "asd69@xd.yes", "
 ```
 
 Donde `{bff}` = desktop || mobile
+
+- API CREATE
+```bash
+curl -X POST -H 'Content-Type: application/json' -H 'authorization: {token}' -d '{"name": "Rin Tin Tin", "age": "8", breed: "German Sheperd"}' http://localhost:8000/{bff}/api/dogs
+```
+
+Donde `{bff}` = desktop || mobile y `{token}` es el JsonWebToken recibido luego del hacer login exitosamente

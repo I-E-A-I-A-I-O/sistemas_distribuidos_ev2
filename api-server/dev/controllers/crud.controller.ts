@@ -26,7 +26,7 @@ export const createDog = async (request: Request, reply: Response) => {
             ip: request.ip,
             ua: request.headers['user-agent'] || null
         })
-        return reply.status(403).json({ message: 'Access denied.' })
+        return reply.status(403).json({ message: 'You do not have permission to perform this operation.' })
     }
 
     try {

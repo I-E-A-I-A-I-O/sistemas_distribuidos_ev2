@@ -6,6 +6,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import { authRouter } from './routers/auth.router'
 import { log } from './helpers/logstash'
+import { apiRouter } from './routers/api.router'
 
 const PORT = process.env.MOBILE_BFF_PORT || 3000
 const server = Express()
@@ -29,6 +30,7 @@ server.get('/health', async (request, reply) => {
 })
 
 server.use('/mobile', authRouter)
+server.use('/mobile', apiRouter)
 
 server.listen(PORT, () => {
     log('info', 'server-started', { port: PORT, name: 'mobile-bff' })

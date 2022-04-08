@@ -6,7 +6,7 @@ import cors from 'cors'
 import helmet from 'helmet'
 import { authRouter } from './routers/auth.router'
 import { log } from './helpers/logstash'
-import fetch from 'node-fetch'
+import { apiRouter } from './routers/api.router'
 
 const PORT = process.env.DESKTOP_BFF_PORT || 3001
 const server = Express()
@@ -30,6 +30,7 @@ server.get('/health', async (request, reply) => {
 })
 
 server.use('/desktop', authRouter)
+server.use('/desktop', apiRouter)
 
 server.listen(PORT, () => {
     log('info', 'server-started', { port: PORT, name: 'desktop-bff' })
