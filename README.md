@@ -33,3 +33,17 @@ curl -H 'authorization: {token}' http://localhost:8000/{bff}/api/dogs/{dogID}
 ```
 
 Donde `{bff}` = desktop || mobile, `{token}` es el JsonWebToken recibido luego del hacer login exitosamente, y `{dogID}` es la ID del perro
+
+## API UPDATE
+```bash
+curl -X PATCH -H 'Content-Type: application/json' -H 'authorization: {token}' -d '{"name": "Bambi", "age": 400, "breed": "Dalmata"}' http://localhost:8000/{bff}/api/dogs/{dogID}
+```
+
+Donde `{bff}` = desktop || mobile, `{token}` es el JsonWebToken recibido luego del hacer login exitosamente, y `{dogID}` es la ID del perro
+
+## API DELETE
+```bash
+curl -X DELETE -H 'authorization: {token}' http://localhost:8000/{bff}/api/dogs/{dogID}
+```
+
+Donde `{bff}` = desktop || mobile, `{token}` es el JsonWebToken recibido luego del hacer login exitosamente, y `{dogID}` es la ID del perro
