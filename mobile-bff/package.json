@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "prestart": "npm run build",
     "start": "node prod/index.js",
     "start-dev": "nodemon dev/index.ts",
     "build": "tsc"

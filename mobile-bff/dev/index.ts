@@ -8,7 +8,7 @@ import { authRouter } from './routers/auth.router'
 import { log } from './helpers/logstash'
 import { apiRouter } from './routers/api.router'
 
-const PORT = process.env.MOBILE_BFF_PORT || 3000
+const PORT = process.env.MOBILE_BFF_PORT || 6969
 const server = Express()
 
 server.use(helmet())

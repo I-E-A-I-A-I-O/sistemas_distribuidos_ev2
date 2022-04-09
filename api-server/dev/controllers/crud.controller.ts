@@ -187,7 +187,7 @@ export const editDog = async (request: Request, reply: Response) => {
 
         await pool.connect(async (conn) => {
             const dogList = await conn.query<DogDB>(sql`
-            UPDATE TABLE dogs.dogs
+            UPDATE dogs.dogs
             SET
             dog_name=${body.name},
             dog_age=${body.age},
