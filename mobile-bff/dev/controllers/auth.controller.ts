@@ -6,7 +6,7 @@ import { log } from '../helpers/logstash'
 export const register = async (request: Request, reply: Response) => {
     try {
         const cr = await Credentials.parseAsync(request.body)
-        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
+        const response = await fetch(`http://mainproxy:${process.env.MAIN_PROXY_PORT}${request.url}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export const register = async (request: Request, reply: Response) => {
 export const login = async (request: Request, reply: Response) => {
     try {
         const cr = await Credentials.parseAsync(request.body)
-        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
+        const response = await fetch(`http://mainproxy:${process.env.MAIN_PROXY_PORT}${request.url}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'

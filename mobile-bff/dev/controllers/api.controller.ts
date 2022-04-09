@@ -17,7 +17,7 @@ export const registerDog = async (request: Request, reply: Response) => {
 
     try {
         const body = await Dog.parseAsync(request.body)
-        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
+        const response = await fetch(`http://serviceproxy:${process.env.SERVICE_PROXY_PORT}${request.url}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -59,7 +59,7 @@ export const read = async (request: Request, reply: Response) => {
     }
 
     try {
-        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
+        const response = await fetch(`http://serviceproxy:${process.env.SERVICE_PROXY_PORT}${request.url}`, {
             method: 'GET',
             headers: {
                 'authorization': request.headers['authorization']
@@ -112,7 +112,7 @@ export const patch = async (request: Request, reply: Response) => {
         }
 
         const body = await Dog.parseAsync(request.body)
-        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
+        const response = await fetch(`http://serviceproxy:${process.env.SERVICE_PROXY_PORT}${request.url}`, {
             method: 'PATCH',
             headers: {
                 'Content-Type': 'application/json',
@@ -154,7 +154,7 @@ export const deleteDog = async (request: Request, reply: Response) => {
     }
 
     try {
-        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
+        const response = await fetch(`http://serviceproxy:${process.env.SERVICE_PROXY_PORT}${request.url}`, {
             method: 'DELETE',
             headers: {
                 'authorization': request.headers['authorization']
