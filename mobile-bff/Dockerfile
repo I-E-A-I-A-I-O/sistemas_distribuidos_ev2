@@ -4,5 +4,5 @@ COPY package*.json ./
 RUN npm i
 COPY dev ./
 COPY tsconfig.json ./
-EXPOSE 3000
+EXPOSE ${PORT}
 CMD [ "npm", "run", "start" ]

@@ -38,22 +38,63 @@ services:
       - desktop-bff
     networks:
       - my-network
+  service-proxy:
+    container_name: serviceproxy
+    ports:
+      - "8100:8100"
+    build: ./service-proxy
+    depends_on:
+      - main-proxy
+      - auth-server
+      - api-server
+    networks:
+      - my-network
   mobile-bff:
     container_name: mobilebff
-    build: ./mobile-bff
+    build:
+      context: ./mobile-bff
+      args:
+        - PORT=${MOBILE_BFF_PORT}
     ports:
       - "${MOBILE_BFF_PORT}:${MOBILE_BFF_PORT}"
+    env_file:
+      - .env
+    networks:
+      - my-network
+  desktop-bff:
+    container_name: desktopbff
+    build:
+      context: ./desktop-bff
+      args:
+        - PORT=${DESKTOP_BFF_PORT}
+    ports:
+      - "${DESKTOP_BFF_PORT}:${DESKTOP_BFF_PORT}"
+    env_file:
+      - .env
+    networks:
+      - my-network
+  auth-server:
+    container_name: authserver
+    build:
+      context: ./auth-server
+      args:
+        - PORT=${AUTH_SERVER_PORT}
+    ports:
+      - "${AUTH_SERVER_PORT}:${AUTH_SERVER_PORT}"
     env_file:
       - .env
     depends_on:
       - db
     networks:
       - my-network
-  desktop-bff:
-    container_name: desktopbff
-    build: ./desktop-bff
+  api-server:
+    container_name: apiserver
+    build:
+      context: ./api-server
+      args:
+        - PORT=${API_SERVER_PORT}
     ports:
-      - "${DESKTOP_BFF_PORT}:${DESKTOP_BFF_PORT}"
+      - "${API_SERVER_PORT}:${API_SERVER_PORT}"
     env_file:
       - .env
     depends_on:
