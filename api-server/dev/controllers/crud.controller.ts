@@ -68,7 +68,6 @@ export const readDogs = async (request: Request, reply: Response) => {
             const dogList = await conn.query<DogDB>(sql`
             SELECT *
             FROM dogs.dogs
-            WHERE dog_owner=${user.id}
             `)
             log('info', 'dogs-read', {
                 reason: `user ${user.id} requested dog list`,
@@ -117,8 +116,7 @@ export const readDog = async (request: Request, reply: Response) => {
             const dogList = await conn.query<DogDB>(sql`
             SELECT *
             FROM dogs.dogs
-            WHERE dog_owner=${user.id}
-            AND dog_id=${id}
+            WHERE dog_id=${id}
             `)
             log('info', 'dog-read', {
                 reason: `user ${user.id} requested dog data ${id}`,

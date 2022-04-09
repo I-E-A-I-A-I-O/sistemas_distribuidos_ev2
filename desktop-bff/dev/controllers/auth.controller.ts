@@ -6,7 +6,7 @@ import fetch from 'node-fetch'
 export const register = async (request: Request, reply: Response) => {
     try {
         const cr = await Credentials.parseAsync(request.body)
-        const response = await fetch(`http://127.0.0.1:8100${request.url}`, {
+        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -37,7 +37,7 @@ export const register = async (request: Request, reply: Response) => {
 export const login = async (request: Request, reply: Response) => {
     try {
         const cr = await Credentials.parseAsync(request.body)
-        const response = await fetch(`http://127.0.0.1:8100${request.url}`, {
+        const response = await fetch(`http://${process.env.PROXY_HOST}${request.url}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
