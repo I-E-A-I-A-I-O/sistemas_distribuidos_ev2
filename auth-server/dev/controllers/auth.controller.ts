@@ -29,7 +29,7 @@ export const register = async (request: Request, reply: Response) => {
             return reply.status(400).json({ message: 'email already registered.' })
         }
 
-        const pass = await bcrypt.hash(cr.password, 10)
+        const pass = await bcrypt.hash(cr.password, 12)
 
         await pool.connect(async (conn) => {
             await conn.query(sql`
