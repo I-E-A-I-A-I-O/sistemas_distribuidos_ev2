@@ -111,7 +111,7 @@ export const login = async (request: Request, reply: Response) => {
             ip: request.ip,
             ua: request.headers['user-agent'] || null
         })
-        return reply.status(500).json({ token })
+        return reply.status(201).json({ token })
     } catch(err) {
         log('error', 'exception-caught', {
             stack: err,
