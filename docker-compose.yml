@@ -31,7 +31,7 @@ services:
   main-proxy:
     container_name: mainproxy
     ports:
-      - "8000:8000"
+      - "${MAIN_PROXY_PORT}:${MAIN_PROXY_PORT}"
     build: ./main-proxy
     depends_on:
       - mobile-bff
@@ -41,7 +41,7 @@ services:
   service-proxy:
     container_name: serviceproxy
     ports:
-      - "8100:8100"
+      - "${SERVICE_PROXY_PORT}:${SERVICE_PROXY_PORT}"
     build: ./service-proxy
     depends_on:
       - main-proxy
